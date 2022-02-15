@@ -3,6 +3,7 @@ import extraer_palabras
 import conjugaciones
 
 def inicializacion():
+    #TODO Hacer que esto se haga solo cuando es necesario
     print('Extrayendo palabras...')
     extraer_palabras.extraer('Textos\diccionario_rae_2014.txt')
     print('Generando conjugaciones...')
