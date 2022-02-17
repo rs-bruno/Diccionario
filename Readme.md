@@ -1,4 +1,4 @@
-<p>Repositorio para el desarrollo de herramientas relacionadas al diccionario del idioma español.</p><br><br>
+<p>Repositorio para el desarrollo de herramientas relacionadas al diccionario del idioma español.</p><br>
 <h3>Herramientas a implementar</h3>
 <b>Definiciones:</b><p> Permite obtener definiciones utilizando la aplicación web de la RAE. </p>
 <b>Analizador:</b><p> Devuelve datos estadísticos sobre un texto, hace uso de todo el resto de las herramientas. </p>
