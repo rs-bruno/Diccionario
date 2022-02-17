@@ -1,13 +1,15 @@
 import sys
 import extraer_palabras
 import conjugaciones
+import utilidades
 
 def inicializacion():
-    #TODO Hacer que esto se haga solo cuando es necesario
+    # TODO: Hacer que esto se haga solo cuando es necesario
     print('Extrayendo palabras...')
-    extraer_palabras.extraer('Textos\diccionario_rae_2014.txt')
+    extraer_palabras.extraer(r'Textos\diccionario.txt')
     print('Generando conjugaciones...')
-    conjugaciones.generar('Textos\palabras_extraidas.txt')
+    conjugaciones.generar(r'Textos\palabras_extraidas.txt')
+    # TODO: Combinar palabras extraidas en un único archivo
 
 if __name__ == '__main__':
     inicializacion()

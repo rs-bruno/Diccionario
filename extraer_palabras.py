@@ -91,7 +91,7 @@ def extraer(path):
                 word_set.append(l[:dot])
     f.close()
     lista_limpia = limpiar_lista(word_set)
-    s = open('Textos\palabras_extraidas.txt', 'w+', encoding='UTF-8')
+    s = open(r'Textos\palabras_extraidas.txt', 'w+', encoding='UTF-8')
     for w in lista_limpia:
         s.write(w + '\n')
     s.close()
