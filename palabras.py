@@ -96,7 +96,3 @@ def extraer(path):
         s.write(w + '\n')
     s.close()
     print(f'Se extrajeron {len(lista_limpia)} palabras.')
-
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        extraer(sys.argv[1])
