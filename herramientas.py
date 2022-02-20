@@ -73,11 +73,11 @@ def porcentuar(path):
         print(x, file=f)
     f.close()
     print(f'Porcentaje usado: ', end='')
-    print(f'{cant_presentes/total}%, ({cant_presentes}/{total}).')
+    print(f'{cant_presentes*100/total}%, ({cant_presentes}/{total}).')
     print(f'Si se agregan palabras faltantes al diccioanrio: ', end='')
     total = total + len(words)
     cant_presentes = cant_presentes + len(words)
-    print(f'{cant_presentes/total}%, ({cant_presentes}/{total}).')
+    print(f'{cant_presentes*100/total}%, ({cant_presentes}/{total}).')
         
 
     #Split
