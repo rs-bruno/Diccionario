@@ -19,7 +19,10 @@ palabras_set = palabras_set | irregulares_set
 
 regulares_f = open(r'Textos\verbos_regulares_conjugados.txt', 'r', encoding='UTF-8')
 regulares_set = {w[:len(w)-1] for w in regulares_f}
+print(len(regulares_set))
+regulares_f.seek(0)
 regulares_list = [w[:len(w)-1] for w in regulares_f]
+print(len(regulares_list))
 regulares_f.close()
 
 def noalpha_to_space(linea):
@@ -42,7 +45,10 @@ def porcentuar(path):
     words = {'0'}
     words.remove('0')
     for l_c in lines_clean:
-        words.update(l_c.split())
+        aux = []
+        for w in l_c.split():
+            aux.append(w.lower())
+        words.update(aux)
     total = len(palabras_set)
     cant_presentes = 0
     for p in palabras_set:
@@ -55,7 +61,7 @@ def porcentuar(path):
     for w in words:
         if w in regulares_set:
             a_quitar.add(w)
-            indice = (regulares_list.index(w) // 53) * 53
+            indice = regulares_list.index(w) // 53
             if not arr_bools[indice]:
                 cant_presentes = cant_presentes + 1
                 arr_bools[indice] = True
@@ -66,8 +72,12 @@ def porcentuar(path):
     for x in sorted(words):
         print(x, file=f)
     f.close()
-    print(f'Porcentaje usado: {cant_presentes/total}%, ({cant_presentes}/{total}).')
-
+    print(f'Porcentaje usado: ', end='')
+    print(f'{cant_presentes/total}%, ({cant_presentes}/{total}).')
+    print(f'Si se agregan palabras faltantes al diccioanrio: ', end='')
+    total = total + len(words)
+    cant_presentes = cant_presentes + len(words)
+    print(f'{cant_presentes/total}%, ({cant_presentes}/{total}).')
         
 
     #Split
