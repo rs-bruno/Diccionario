@@ -19,10 +19,10 @@ palabras_set = palabras_set | irregulares_set
 
 regulares_f = open(r'Textos\verbos_regulares_conjugados.txt', 'r', encoding='UTF-8')
 regulares_set = {w[:len(w)-1] for w in regulares_f}
-print(len(regulares_set))
+#print(len(regulares_set))
 regulares_f.seek(0)
 regulares_list = [w[:len(w)-1] for w in regulares_f]
-print(len(regulares_list))
+#print(len(regulares_list))
 regulares_f.close()
 
 def noalpha_to_space(linea):

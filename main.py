@@ -25,7 +25,7 @@ if __name__ == '__main__':
     print()
     print('Lista de opciones')
     inp = ''
-    while not (inp == '1'):
+    while not (inp == '1' or inp == '2'):
         print('1) Porcentuar.')
         print('2) Salir.')
         print('Seleccione una opcion: ', end='')
