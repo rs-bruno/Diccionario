@@ -11,7 +11,7 @@
   Debido a que el diccionario (palabras.txt) sólo presenta la forma más elemental de cada palabra (verbos sólo en infinitivo, sustantivos y adjetivos sólo en singular, adverbios que se derivan de otra palabra son omitidos y solo se incluyen adverbios de uso frecuente, etc.), si para calcular la cantidad PORCENTAJE se limitara a simplemente buscar cada palabra del archivo palabras.txt en el texto a analizar lo que se obtendría sería solo una estimación muy burda y poco realista de lo que se pretende calcular.<br><br>
   Para hacer que la estimación sea mas realista se siguen las siguientes heurísticas:
   <ol>
-    <li>Se agregan todas las conjugaciones de los verbos regulares al diccionario, las ocurrencias de cualquier conjugación de un mismo verbo cuentan como una única plabra utilizada, por lo que, por ejemplo 'pinto' y 'pintas' cuentan como una única palabras utilizada.</li>
+    <li>Se agregan todas las conjugaciones de los verbos regulares al diccionario, las ocurrencias de cualquier conjugación de un mismo verbo cuentan como una única plabra utilizada, por lo que, por ejemplo 'pinto' y 'pintas' cuentan como una única palabra utilizada.</li>
     <li>Se agregan todas las conjugaciones de los verbos irregulares al diccionario, las ocurrencias de cualquier conjugacion de un mismo verbo cuenta como palabras utilizadas de forma individual, por lo que, por ejemplo 'soy' y 'eres' cuentan como dos palabras utilizadas.
   </ol>
   
