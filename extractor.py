@@ -1,4 +1,5 @@
 # Módulo extractor, función extraer extrae palabras del texto del diccionario.
+import sys
 
 def linea_candidata(line, prev_line):
     ''' Primer filtro para encontrar palabras del diccionario.
@@ -21,6 +22,29 @@ def descartar_palabra(p):
 
 def femeninizar(pre, suff):
     '''Genera versiones femeninas de sustantivos.'''
+    if pre.endswith('n') or pre.endswith('s'): #elimina conugación en palabras agudas
+        x = pre[len(pre)-2]
+        y = pre[len(pre)-1]
+        if x == 'á':
+            pre = pre[:len(pre)-2] + 'a' + y
+        elif x == 'é':
+            pre = pre[:len(pre)-2] + 'e' + y
+        elif x == 'í':
+            pre = pre[:len(pre)-2] + 'i' + y
+        elif x == 'ó':
+            pre = pre[:len(pre)-2] + 'o' + y
+        elif x == 'u':
+            pre = pre[:len(pre)-2] + 'u' + y
+    if pre.endswith('á'):
+        pre = pre[:len(pre)-1] + 'a'
+    elif pre.endswith('é'):
+        pre = pre[:len(pre)-1] + 'e'
+    elif pre.endswith('í'):
+        pre = pre[:len(pre)-1] + 'i'
+    elif pre.endswith('ó'):
+        pre = pre[:len(pre)-1] + 'o'
+    elif pre.endswith('ú'):
+        pre = pre[:len(pre)-1] + 'u'
     if suff.endswith('a'):
         first_suff = suff[0]
         if first_suff == 'a':
@@ -57,17 +81,28 @@ def limpiar_lista(lista_palabras):
     for ps in filtro2:
         filtro_spaces.append(ps.replace(' ', ''))
     proc_commas = []
+    #commas_file = open('commas.txt', 'w+', encoding='UTF-8')
     for pc in filtro_spaces:
         if pc.count(',') > 0:
             aux_list = pc.split(',')
             if aux_list[1].endswith('a') or aux_list[1].endswith('triz'):
+                proc_commas.append(aux_list[0])
                 fem = femeninizar(*aux_list)
                 proc_commas.append(fem)
-                proc_commas.append(aux_list[0])
+                if aux_list[0].endswith(('a','e','i','o','u','á','é','í','ó','ú')):
+                    proc_commas.append(aux_list[0]+'s')
+                else:
+                    proc_commas.append(aux_list[0]+'es')
+                if fem.endswith('a'):
+                    proc_commas.append(fem+'s')
+                else:
+                    proc_commas.append(fem[:len(fem)-1]+'ces')
+                #print(f'{pc} -> {aux_list[0]}, {fem}', file=commas_file)
             else:
                 proc_commas.append(aux_list[0])
         else:
             proc_commas.append(pc)
+    #commas_file.close()
     res = []
     for r in proc_commas:
         if r.isalpha():
@@ -96,3 +131,7 @@ def extraer(path):
         s.write(w + '\n')
     s.close()
     print(f'Se extrajeron {len(lista_limpia)} palabras.')
+
+if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        extraer(sys.argv[1])
