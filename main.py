@@ -1,7 +1,6 @@
 import os
 import sys
 import conjugaciones
-import herramientas
 
 def inicializacion():
     # Se conjugan los verbos regulares
@@ -22,6 +21,7 @@ def inicializacion():
 
 if __name__ == '__main__':
     inicializacion()
+    import herramientas
     print()
     print('Lista de opciones')
     inp = ''
