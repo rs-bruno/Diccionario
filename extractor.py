@@ -82,27 +82,35 @@ def limpiar_lista(lista_palabras):
         filtro_spaces.append(ps.replace(' ', ''))
     proc_commas = []
     #commas_file = open('commas.txt', 'w+', encoding='UTF-8')
+    sus_adj = open(r'Textos\sus_adj.txt', 'w+', encoding='UTF-8')
     for pc in filtro_spaces:
         if pc.count(',') > 0:
             aux_list = pc.split(',')
             if aux_list[1].endswith('a') or aux_list[1].endswith('triz'):
                 proc_commas.append(aux_list[0])
+                print(aux_list[0], file=sus_adj)
                 fem = femeninizar(*aux_list)
-                proc_commas.append(fem)
+                #proc_commas.append(fem)
+                print(fem, file=sus_adj)
                 if aux_list[0].endswith(('a','e','i','o','u','á','é','í','ó','ú')):
-                    proc_commas.append(aux_list[0]+'s')
+                    #proc_commas.append(aux_list[0]+'s')
+                    print(aux_list[0]+'s', file=sus_adj)
                 else:
-                    proc_commas.append(aux_list[0]+'es')
+                    #proc_commas.append(aux_list[0]+'es')
+                    print(aux_list[0]+'es', file=sus_adj)
                 if fem.endswith('a'):
-                    proc_commas.append(fem+'s')
+                    #proc_commas.append(fem+'s')
+                    print(fem+'s', file=sus_adj)
                 else:
-                    proc_commas.append(fem[:len(fem)-1]+'ces')
+                    #proc_commas.append(fem[:len(fem)-1]+'ces')
+                    print(fem[:len(fem)-1]+'ces', file=sus_adj)
                 #print(f'{pc} -> {aux_list[0]}, {fem}', file=commas_file)
             else:
                 proc_commas.append(aux_list[0])
         else:
             proc_commas.append(pc)
     #commas_file.close()
+    sus_adj.close()
     res = []
     for r in proc_commas:
         if r.isalpha():
