@@ -29,10 +29,10 @@
 <details>
   <summary>Casos de prueba porcentuador.</summary>
   Nombre obra | Porcentaje real | Porcentaje extendido<br>
+  4 3 2 1 (Paul Auster) | 15.184529941326645%, (13561/89308) | 22.42851876126495%, (21901/97648)<br>
+  La Santa Biblia (Digitalización por google) | 12.295651005509026%, (10981/89308) | 42.51018385995816%, (57918/136245)<br>
   Don Quijote de la Mancha (Miguel de Cervantes) | 11.832086711156895%, (10567/89308) | 18.917332564461653%, (18371/97112)<br>
   Cien años de soledad (Gabriel García Márquez) | 10.522013705379138%, (9397/89308) | 14.218085791575422%, (13245/93156)<br>
-  4 3 2 1 (Paul Auster) | 15.184529941326645%, (13561/89308) | 22.42851876126495%, (21901/97648)<br>
-  La Santa Biblia (Digitalizada por google) | 12.295651005509026%, (10981/89308) | 42.51018385995816%, (57918/136245)<br>
-  Ilíada (Homero) | 6.903076991982801%, (6165/89308) | 12.164846077457796%, (11515/94658)<br>
   Odisea (Homero) | 7.207640972813186%, (6437/89308) | 13.074809096249057%, (12465/95336)<br>
+  Ilíada (Homero) | 6.903076991982801%, (6165/89308) | 12.164846077457796%, (11515/94658)<br>
 </details>
