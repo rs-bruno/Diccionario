@@ -5,6 +5,7 @@
 #       Textos\verbos_irregulares_conugados.txt
 #       Textos\verbos_regulares_infinitivos.txt
 #       Textos\verbos_regulares_conjugados.txt
+#       Textos\sus_adj.txt
 #   La funcionalidad del módulo depende de dichos archivos.
 import time
 palabras_f = open(r'Textos\palabras.txt', 'r', encoding='UTF-8')
@@ -19,11 +20,15 @@ palabras_set = palabras_set | irregulares_set
 
 regulares_f = open(r'Textos\verbos_regulares_conjugados.txt', 'r', encoding='UTF-8')
 regulares_set = {w[:len(w)-1] for w in regulares_f}
-#print(len(regulares_set))
 regulares_f.seek(0)
 regulares_list = [w[:len(w)-1] for w in regulares_f]
-#print(len(regulares_list))
 regulares_f.close()
+
+sus_adj_f = open(r'Textos\sus_adj.txt', 'r', encoding='UTF-8')
+sus_adj_set = {w[:len(w)-1] for w in sus_adj_f}
+sus_adj_f.seek(0)
+sus_adj_list = [w[:len(w)-1] for w in sus_adj_f]
+sus_adj_f.close()
 
 def noalpha_to_space(linea):
     buff = ''
@@ -45,9 +50,7 @@ def porcentuar(path):
     words = {'0'}
     words.remove('0')
     for l_c in lines_clean:
-        aux = []
-        for w in l_c.split():
-            aux.append(w.lower())
+        aux = [w.lower() for w in l_c.split()]
         words.update(aux)
     total = len(palabras_set)
     cant_presentes = 0
@@ -55,16 +58,23 @@ def porcentuar(path):
         if p in words:
             cant_presentes = cant_presentes + 1
             words.remove(p)
-    arr_bools = [False for x in range(len(regulares_list) // 53)]
+    bools_verbos_regulares = [False for x in range(len(regulares_list) // 53)]
+    bools_sus_adj = [False for x in range(len(sus_adj_list) // 4)]
     a_quitar = {'0'}
     a_quitar.remove('0')
     for w in words:
         if w in regulares_set:
             a_quitar.add(w)
             indice = regulares_list.index(w) // 53
-            if not arr_bools[indice]:
+            if not bools_verbos_regulares[indice]:
                 cant_presentes = cant_presentes + 1
-                arr_bools[indice] = True
+                bools_verbos_regulares[indice] = True
+        elif w in sus_adj_set:
+            a_quitar.add(w)
+            indice = sus_adj_list.index(w) // 4
+            if not bools_sus_adj[indice]:
+                cant_presentes = cant_presentes + 1
+                bools_sus_adj[indice] = True
     words = words - a_quitar
     t = time.localtime()
     outputname = f'ausentes_{t.tm_year}_{t.tm_mon}_{t.tm_mday}_{t.tm_hour}_{t.tm_min}_{t.tm_sec}.txt'
@@ -78,7 +88,3 @@ def porcentuar(path):
     total = total + len(words)
     cant_presentes = cant_presentes + len(words)
     print(f'{cant_presentes*100/total}%, ({cant_presentes}/{total}).')
-        
-
-    #Split
-    #Crear conjunto
