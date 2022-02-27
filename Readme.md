@@ -6,12 +6,7 @@
 <b>Definiciones:</b>
 <details>
   <summary>Permite obtener definiciones utilizando servicios web.</summary>
-  Sin detalles.
-</details>
-<b>Analizador:</b>
-<details>
-  <summary>Devuelve datos estadísticos sobre un texto, hace uso del resto de las herramientas.</summary>
-  Sin detalles.
+  Aún no implementado.
 </details>
 <b>Porcentuador:</b>
 <details>
