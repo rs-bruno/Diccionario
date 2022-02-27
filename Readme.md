@@ -1,7 +1,4 @@
-<details>
-  <summary>diccionario.es</summary>
-  Repositorio para el desarrollo de herramientas relacionadas al diccionario del idioma español.
-</details>
+<p>Repositorio para el desarrollo de herramientas relacionadas al diccionario del idioma español.</p>
 <h3>Herramientas a implementar</h3>
 <b>Definiciones:</b>
 <details>
