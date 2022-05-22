@@ -1,6 +1,7 @@
 import os
 import sys
 import conjugaciones
+import time as t
 
 def inicializacion():
     # Se conjugan los verbos regulares
@@ -32,6 +33,9 @@ if __name__ == '__main__':
         inp = input()
     if inp == '1':
         x = input('Ingrese un archivo: ')
+        a = t.process_time_ns()
         herramientas.porcentuar(x)
+        b = t.process_time_ns()
+        print(f'Porcentuado en: {(b-a)/1000**2}ms')
     else:
         exit()
