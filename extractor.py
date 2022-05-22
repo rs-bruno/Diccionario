@@ -1,11 +1,11 @@
 # Módulo extractor, función extraer extrae palabras del texto del diccionario.
+import os
 import sys
 
 def linea_candidata(line, prev_line):
     ''' Primer filtro para encontrar palabras del diccionario.
-
-    Se eligen lineas que pueden ser el inicio de una definición, y por lo tanto contener a la palabra como
-    sufijo.'''
+        Se eligen lineas que pueden ser el inicio de una definición, y por lo tanto 
+        contener a la palabra como sufijo.'''
     ret = False
     if prev_line[0] == '\n' and line != '\n':
         ret = True
@@ -13,7 +13,8 @@ def linea_candidata(line, prev_line):
     return ret
 
 def descartar_palabra(p):
-    ''' Se usan criterios para descartar lineas que se sabe que no son definiciones o que son palabras repetidas.'''
+    ''' Se usan criterios para descartar lineas que se sabe que no son 
+        definiciones o que son palabras repetidas.'''
     if p.count(' ') > 1 and p.count('1') == p.count('2') == 0 :
         return True
     if not p[0].isalpha() or not p[0].islower():
@@ -61,8 +62,9 @@ def femeninizar(pre, suff):
         pre = pre[:len(pre)-3] + suff
     return pre
 
-def limpiar_lista(lista_palabras):
-    '''Se eliminan los 1 y 2, se elimina lo que está despues de las comas, y se agregan las formas femeninas de los sustantivos.'''
+def limpiar_lista(lista_palabras, path):
+    ''' Se eliminan los 1 y 2, se elimina lo que está despues de las comas,
+         y se agregan las formas femeninas y plural de los sustantivos.'''
     filtro1 = []
     for p1 in lista_palabras:
         one = p1.find('1')
@@ -81,8 +83,9 @@ def limpiar_lista(lista_palabras):
     for ps in filtro2:
         filtro_spaces.append(ps.replace(' ', ''))
     proc_commas = []
-    #commas_file = open('commas.txt', 'w+', encoding='UTF-8')
-    sus_adj = open(r'Textos\sus_adj.txt', 'w+', encoding='UTF-8')
+    #commas_file = open(path + os.sep + 'commas.txt', 'w+', encoding='UTF-8')
+    print('Generando archivo de sustantivos y adjetivos...')
+    sus_adj = open(path + os.sep + 'sus_adj.txt', 'w+', encoding='UTF-8')
     for pc in filtro_spaces:
         if pc.count(',') > 0:
             aux_list = pc.split(',')
@@ -123,23 +126,22 @@ def limpiar_lista(lista_palabras):
     return final_res
 
 def extraer(path):
-    '''Extrae las palabras del texto del diccionario.'''
+    ''' Extrae las palabras del texto del archivo diccionario.txt que se encuentra 
+        en la ruta especificada por path.'''
+    print('Extrayendo palabras...')
+    print('Generando archivo de palabras...')
     word_set = ['0']
     prev_line = ['x']
-    f = open(path, 'r+', encoding='UTF-8')
+    f = open(path + os.sep + "diccionario.txt", 'r+', encoding='UTF-8')
     for l in f:
         if linea_candidata(l, prev_line):
             dot = l.find('.')
             if (dot > 0) and not descartar_palabra(l[:dot]):
                 word_set.append(l[:dot])
     f.close()
-    lista_limpia = limpiar_lista(word_set)
-    s = open(r'Textos\palabras.txt', 'w+', encoding='UTF-8')
+    lista_limpia = limpiar_lista(word_set, path)
+    s = open(path + os.sep + "palabras.txt", 'w+', encoding='UTF-8')
     for w in lista_limpia:
         s.write(w + '\n')
     s.close()
     print(f'Se extrajeron {len(lista_limpia)} palabras.')
-
-if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        extraer(sys.argv[1])
