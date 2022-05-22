@@ -1,4 +1,8 @@
-irregulares = open(r'Textos\verbos_irregulares_infinitivos.txt', 'r', encoding='UTF-8')
+# Módulo conjugaciones, se generan las conjugaciones de los verbos regulares.
+import os
+import sys
+
+irregulares = open(os.getcwd() + os.sep + 'Textos' + os.sep + 'verbos_irregulares_infinitivos.txt', 'r', encoding='UTF-8')
 verbos_irregulares = {x for x in irregulares}
 irregulares.close()
 
@@ -184,20 +188,19 @@ def conjugar_verbos(lista_infinitivos):
         ret.extend(conjugar(v))
     return ret
 
-def generar():
-    '''Genera un archivo con las conjugaciones de todos los verbos encontrados en el archivo cuya ruta es *path*.'''
-    print('Generando conjugaciones...')
-    print('Extrayendo infinitivos regulares...')
-    verbos = extraer_infinitivos(r'Textos\palabras.txt')
-    f = open(r'Textos\verbos_regulares_infinitivos.txt', 'w+', encoding='UTF-8')
-    print('Guardando archivo de infinitivos regulares...')
+def generar(path):
+    ''' Genera un archivo con las conjugaciones de todos los verbos encontrados 
+        en el archivo palabras.txt que se encuentra en la ruta especificada por path.'''
+    print('Conjugando verbos...')
+    print('Generando archivo de regulares infinitivos...')
+    verbos = extraer_infinitivos(path + os.sep + 'palabras.txt')
+    f = open(path + os.sep + 'verbos_regulares_infinitivos.txt', 'w+', encoding='UTF-8')
     for v in verbos:
         print(v, file=f)
     f.close()
-    print('Conjugando infinitivos regulares...')
+    print('Generando archivo de regulares conjugados...')
     conjugaciones = conjugar_verbos(verbos)
-    f = open(r'Textos\verbos_regulares_conjugados.txt', 'w+', encoding='UTF-8')
-    print('Guardando archivo de regulares conjugados...')
+    f = open(path + os.sep + 'verbos_regulares_conjugados.txt', 'w+', encoding='UTF-8')
     for c in conjugaciones:
         print(c, file=f)
     f.close()
