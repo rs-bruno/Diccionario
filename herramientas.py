@@ -10,11 +10,12 @@
 import os
 import time as t
 
-n_int = [1]
-def print_intervalo(a,b,c):
+n_int = 1
+def print_intervalo(a,b):
+    global n_int
     '''Funcion auxiliar: imprime la cantidad de tiempo transcurrido entre dos instantes'''
-    print(f'Intervalo {c[0]} = {(b-a)/1000**2}ms')
-    c[0] = c[0] + 1
+    print(f'Intervalo {n_int} = {(b-a)/1000**2}ms')
+    n_int = n_int + 1
 
 #   Estructura auxiliar, conjunto de todas las palabras.
 palabras_f = open(os.getcwd()+os.sep+'Textos'+os.sep+'palabras.txt', 'r', encoding='UTF-8')
@@ -32,14 +33,10 @@ irregulares_f.close()
 palabras_set = palabras_set | irregulares_set
 
 regulares_f = open(os.getcwd()+os.sep+'Textos'+os.sep+'verbos_regulares_conjugados.txt', 'r', encoding='UTF-8')
-regulares_set = {w[:len(w)-1] for w in regulares_f}
-regulares_f.seek(0)
 regulares_list = [w[:len(w)-1] for w in regulares_f]
 regulares_f.close()
 
 sus_adj_f = open(os.getcwd()+os.sep+'Textos'+os.sep+'sus_adj.txt', 'r', encoding='UTF-8')
-sus_adj_set = {w[:len(w)-1] for w in sus_adj_f}
-sus_adj_f.seek(0)
 sus_adj_list = [w[:len(w)-1] for w in sus_adj_f]
 sus_adj_f.close()
 
@@ -69,97 +66,80 @@ def bin_search(str, list):
 
 def porcentuar(path):
     '''Calcula una estimación del porcentaje de la lengua española utilizada.'''
-    t1_i = t.process_time_ns() #
+    # t1_i = t.process_time_ns() #
     f = open(path, 'r', encoding='UTF-8')
     lines_raw = f.readlines()
     f.close()
-    t1_f = t.process_time_ns() #
-    print_intervalo(t1_i, t1_f, n_int) #
+    # t1_f = t.process_time_ns() #
+    # print_intervalo(t1_i, t1_f) #
 
 
-    t2_i = t.process_time_ns() #
+    # t2_i = t.process_time_ns() #
     lines_clean = []
     for l_r in lines_raw:
         lines_clean.append(noalpha_to_space(l_r))
-    t2_f = t.process_time_ns() #
-    print_intervalo(t2_i, t2_f, n_int) #
+    # t2_f = t.process_time_ns() #
+    # print_intervalo(t2_i, t2_f) #
 
-    t3_i = t.process_time_ns() #
+    # t3_i = t.process_time_ns() #
     words = {'0'}
     words.remove('0')
     for l_c in lines_clean:
         aux = [w.lower() for w in l_c.split()]
         words.update(aux)
-    t3_f = t.process_time_ns() #
-    print_intervalo(t3_i, t3_f, n_int) #
+    # t3_f = t.process_time_ns() #
+    # print_intervalo(t3_i, t3_f) #
 
-    t4_i = t.process_time_ns() #
+    # t4_i = t.process_time_ns() #
     total = len(palabras_set)
     cant_presentes = 0
     for p in palabras_set:
         if p in words:
             cant_presentes = cant_presentes + 1
             words.remove(p)
-    t4_f = t.process_time_ns() #
-    print_intervalo(t4_i, t4_f, n_int) #
+    # t4_f = t.process_time_ns() #
+    # print_intervalo(t4_i, t4_f) #
 
-    t5_i = t.process_time_ns() #
+    # t5_i = t.process_time_ns() #
     bools_verbos_regulares = [False for x in range(len(regulares_list) // 53)]
     bools_sus_adj = [False for x in range(len(sus_adj_list) // 4)]
-    t5_f = t.process_time_ns() #
-    print_intervalo(t5_i, t5_f, n_int) #
+    # t5_f = t.process_time_ns() #
+    # print_intervalo(t5_i, t5_f) #
 
-
-    # intervalo a optimizar, el objetivo de ésta sección de código es ver que palabras del conjunto words
-    # el cual contiene las palabras que no estaban en palabras_set (conjunto con todas las palabras menos
-    # conjugaciones de verbos regulares y formas plurales y femenina singular de sustantivos y adjetivos)
-    # son justamente conjugaciones de verbos regulares o formas plurales/femenina de sustantivos/adjetivos.
-    # Para ello se busca cada palabra de words en los archivos de conugaciones y formas plurales, ésto es muy
-    # costoso dado que dichos archivos son de gran tamaño y han de recorrerse tantas veces como palabras hay en
-    # el conjunto words.
-    # Buscando cada palabra de sorted(words) en sorted(regulares_set) y sorted(sus_adj_set) se puede aprovechar
-    # el progreso hecho en la búsqueda por cada palabra anterior de sorted(words).
-    t6_i = t.process_time_ns() #
-
+    # t6_i = t.process_time_ns() #
     a_quitar = {'0'}
     a_quitar.remove('0')
     regulares_set_ordenado = sorted(list(zip(range(len(regulares_list)), regulares_list)), key=lambda x:x[1])
     sus_adj_set_ordenado = sorted(list(zip(range(len(sus_adj_list)), sus_adj_list)), key=lambda x:x[1])
     words_ordenado = sorted(words)
-    ind_regulares = 0
-    ind_sus_adj = 0
+    i = 0
+    j = 0
     for w in words_ordenado:
-        if(ind_regulares >= len(regulares_set_ordenado) and ind_sus_adj >= len(sus_adj_set_ordenado)):
+        if(i >= len(regulares_set_ordenado) and j >= len(sus_adj_set_ordenado)):
             break
-        while ind_regulares < len(regulares_set_ordenado) and w > regulares_set_ordenado[ind_regulares][1]:
-            ind_regulares = ind_regulares + 1
-        if(ind_regulares < len(regulares_set_ordenado) and w == regulares_set_ordenado[ind_regulares][1]):
-            a_quitar.add(regulares_set_ordenado[ind_regulares][1])
-            pos_lista = regulares_set_ordenado[ind_regulares][0]
+        while i < len(regulares_set_ordenado) and w > regulares_set_ordenado[i][1]:
+            i = i + 1
+        if(i < len(regulares_set_ordenado) and w == regulares_set_ordenado[i][1]):
+            a_quitar.add(regulares_set_ordenado[i][1])
+            pos_lista = regulares_set_ordenado[i][0]
             if not bools_verbos_regulares[pos_lista // 53]:
               bools_verbos_regulares[pos_lista // 53] = True
-              cant_presentes = cant_presentes +1
-        while ind_sus_adj < len(sus_adj_set_ordenado) and w > sus_adj_set_ordenado[ind_sus_adj][1]:
-            ind_sus_adj = ind_sus_adj + 1
-        if(ind_sus_adj < len(sus_adj_set_ordenado) and w == sus_adj_set_ordenado[ind_sus_adj][1]):
-            a_quitar.add(sus_adj_set_ordenado[ind_sus_adj][1])
-            pos_lista = sus_adj_set_ordenado[ind_sus_adj][0]
+              cant_presentes = cant_presentes + 1
+        while j < len(sus_adj_set_ordenado) and w > sus_adj_set_ordenado[j][1]:
+            j = j + 1
+        if(j < len(sus_adj_set_ordenado) and w == sus_adj_set_ordenado[j][1]):
+            pos_lista = sus_adj_set_ordenado[j][0]
             if not bools_sus_adj[pos_lista // 4]:
+              a_quitar.add(sus_adj_set_ordenado[j][1])
               bools_sus_adj[pos_lista // 4] = True
-              cant_presentes = cant_presentes +1
-            
-    
-
-
-    t6_f = t.process_time_ns() #
-    print_intervalo(t6_i, t6_f, n_int) #
-
+              cant_presentes = cant_presentes + 1
+    # t6_f = t.process_time_ns() #
+    # print_intervalo(t6_i, t6_f) #
 
     # t8_i = t.process_time_ns() #
     words = words - a_quitar
     # t8_f = t.process_time_ns() #
-    # print_intervalo(t8_i, t8_f, n_int) #
-
+    # print_intervalo(t8_i, t8_f) #
 
     # t7_i = t.process_time_ns() #
     tt = t.localtime()
@@ -169,7 +149,7 @@ def porcentuar(path):
         print(x, file=f)
     f.close()
     # t7_f = t.process_time_ns() #
-    # print_intervalo(t7_i, t7_f, n_int) #
+    # print_intervalo(t7_i, t7_f) #
 
     print(f'Porcentaje usado: ', end='')
     print(f'{cant_presentes*100/total}%, ({cant_presentes}/{total}).')
