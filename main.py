@@ -29,18 +29,19 @@ def inicializacion():
 if __name__ == '__main__':
     inicializacion()
     import herramientas
-    print('Lista de opciones')
     inp = ''
-    while not (inp == '1' or inp == '2'):
-        print('1) Porcentuar.')
-        print('2) Salir.')
-        print('Seleccione una opcion: ', end='')
-        inp = input()
-    if inp == '1':
-        x = input('Ingrese un archivo: ')
-        a = t.process_time_ns()
-        herramientas.porcentuar(x)
-        b = t.process_time_ns()
-        print(f'Porcentuado en: {(b-a)/1000**2}ms')
-    else:
-        exit()
+    while True:
+        while not (inp == '1' or inp == '2'):
+            print('================================================================')
+            print('1) Porcentuar.')
+            print('2) Salir.')
+            inp = input('Seleccione una opcion: ')
+        if inp == '1':
+            inp = ''
+            x = input('Ingrese archivo (ruta relativa): ')
+            a = t.process_time_ns()
+            herramientas.porcentuar(x)
+            b = t.process_time_ns()
+            print(f'Porcentuado en: {(b-a)/1000**2}ms')
+        else:
+            exit()
