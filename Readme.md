@@ -19,12 +19,12 @@
 </p>
 </details>
 <details>
-  <summary>Casos de prueba porcentuador.</summary>
-  Nombre obra | Porcentaje real | Porcentaje extendido<br>
-  4 3 2 1 (Paul Auster) | 15.184529941326645%, (13561/89308) | 22.42851876126495%, (21901/97648)<br>
-  La Santa Biblia (Digitalización por google) | 12.295651005509026%, (10981/89308) | 42.51018385995816%, (57918/136245)<br>
-  Don Quijote de la Mancha (Miguel de Cervantes) | 11.832086711156895%, (10567/89308) | 18.917332564461653%, (18371/97112)<br>
-  Cien años de soledad (Gabriel García Márquez) | 10.522013705379138%, (9397/89308) | 14.218085791575422%, (13245/93156)<br>
-  Odisea (Homero) | 7.207640972813186%, (6437/89308) | 13.074809096249057%, (12465/95336)<br>
-  Ilíada (Homero) | 6.903076991982801%, (6165/89308) | 12.164846077457796%, (11515/94658)<br>
+  <summary>Casos de prueba porcentuador. (v2.0.0)</summary>
+  Nombre obra | Porcentaje real | Porcentaje extendido | Tiempo de cómputo<br>
+  4 3 2 1 (Paul Auster) | 15.27186814171183%, (13639/89308) | 23.272155749340904%, (22951/98620) | 2078.125ms<br>
+  La Santa Biblia (Digitalización por google) | 12.38186948537645%, (11058/89308) | 42.83522665010776%, (58635/136885) | 3109.375ms<br>
+  Don Quijote de la Mancha (Miguel de Cervantes) | 11.903748824293457%, (10631/89308) | 19.566328616995175%, (19139/97816) | 1859.375ms<br>
+  Cien años de soledad (Gabriel García Márquez) | 10.586957495409147%, (9455/89308) | 14.764369963174468%, (13832/93685) | 1296.875ms<br>
+  Odisea (Homero) | 7.25802839611233%, (6482/89308) | 13.401781606791854%, (12818/95644) | 1218.75ms<br>
+  Ilíada (Homero) | 6.961302458906257%, (6217/89308) | 12.5109241573921%, (11882/94973) | 1203.125ms<br>
 </details>
