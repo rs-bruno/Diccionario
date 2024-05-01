@@ -1,10 +1,5 @@
 <p>Repositorio para el desarrollo de herramientas relacionadas al diccionario del idioma español.</p>
 <h3>Herramientas a implementar</h3>
-<b>Definiciones:</b>
-<details>
-  <summary>Permite obtener definiciones utilizando servicios web.</summary>
-  Aún no implementado.
-</details>
 <b>Porcentuador:</b>
 <details>
   <summary>Permite estimar el porcentaje del idioma utilizado por un texto. Útil para tener una idea de la riqueza de un texto de forma rápida.</summary>
@@ -20,11 +15,19 @@
 </details>
 <details>
   <summary>Casos de prueba porcentuador. (v2.0.0)</summary>
-  Nombre obra | Porcentaje real | Porcentaje extendido | Tiempo de cómputo<br>
-  4 3 2 1 (Paul Auster) | 15.27186814171183%, (13639/89308) | 23.272155749340904%, (22951/98620) | 2078.125ms<br>
-  La Santa Biblia (Digitalización por google) | 12.38186948537645%, (11058/89308) | 42.83522665010776%, (58635/136885) | 3109.375ms<br>
-  Don Quijote de la Mancha (Miguel de Cervantes) | 11.903748824293457%, (10631/89308) | 19.566328616995175%, (19139/97816) | 1859.375ms<br>
-  Cien años de soledad (Gabriel García Márquez) | 10.586957495409147%, (9455/89308) | 14.764369963174468%, (13832/93685) | 1296.875ms<br>
-  Odisea (Homero) | 7.25802839611233%, (6482/89308) | 13.401781606791854%, (12818/95644) | 1218.75ms<br>
-  Ilíada (Homero) | 6.961302458906257%, (6217/89308) | 12.5109241573921%, (11882/94973) | 1203.125ms<br>
+    
+  |  Nombre obra | Porcentaje real | Porcentaje extendido |
+  | --- | --- | --- |
+  | 4 3 2 1 (Paul Auster) | 15.27% (13639/89308) | 23.27% (22951/98620) |
+  | La Santa Biblia (Digitalización por google) | 12.38% (11058/89308) | 42.83% (58635/136885) |
+  | Don Quijote de la Mancha (Miguel de Cervantes) | 11.90% (10631/89308) | 19.56% (19139/97816) |
+  | Cien años de soledad (Gabriel García Márquez) | 10.58% (9455/89308) | 14.76% (13832/93685) |
+  | Odisea (Homero) | 7.25% (6482/89308) | 13.40% (12818/95644) |
+  | Ilíada (Homero) | 6.96% (6217/89308) | 12.51% (11882/94973) |
+
+</details>
+<b>Definiciones:</b>
+<details>
+  <summary>Permite obtener definiciones utilizando servicios web.</summary>
+  Aún no implementado.
 </details>
