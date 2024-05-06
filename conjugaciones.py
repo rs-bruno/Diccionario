@@ -17,7 +17,7 @@ def extraer_infinitivos(path):
     return ret
 
 def conjugar(verbo):
-    # Ejemplo: x = 'amar\n', len(x) = 5, x[:len(x)] = 'amar', x[:len(x)-2] = 'am'
+    # Ejemplo: x = 'amar', len(x) = 4, x[:len(x)] = 'amar', x[:len(x)-2] = 'am'
     conjugaciones = [verbo]
     n = len(verbo)
     if verbo.endswith('ar'):

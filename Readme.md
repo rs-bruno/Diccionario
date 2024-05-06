@@ -1,33 +1,107 @@
-<p>Repositorio para el desarrollo de herramientas relacionadas al diccionario del idioma español.</p>
-<h3>Herramientas a implementar</h3>
-<b>Porcentuador:</b>
-<details>
-  <summary>Permite estimar el porcentaje del idioma utilizado por un texto. Útil para tener una idea de la riqueza de un texto de forma rápida.</summary>
-  <p align="justify">
-  Lo que se intenta calcular es lo siguiente: PORCENTAJE = 100*(cantidad de palabras(distintas) utilizadas)/(cantidad de palabras existentes(en el idioma español)). Debido a que el diccionario (palabras.txt) sólo presenta la forma más elemental de cada palabra (verbos sólo en infinitivo, sustantivos y adjetivos sólo en singular masculino/neutro, adverbios que se derivan de otra palabra son omitidos y solo se incluyen adverbios "puros" o de uso frecuente, etc.), si para calcular la cantidad PORCENTAJE se limitara a simplemente buscar cada palabra del archivo palabras.txt en el texto a analizar lo que se obtendría sería solo una estimación muy burda y poco realista de lo que se pretende calcular. Para hacer que la estimación sea mas realista se usan las siguientes heurísticas:
-  <ol>
-    <li>Se agregan todas las conjugaciones de los verbos regulares al diccionario, las ocurrencias de cualquier conjugación de un mismo verbo cuentan como una única plabra utilizada, por lo que, por ejemplo 'pinto' y 'pintas' cuentan como una única palabra utilizada (el verbo pintar).</li>
-    <li>Se agregan todas las conjugaciones de los verbos irregulares al diccionario, las ocurrencias de cualquier conjugacion de un verbo irregular cuentan como palabras utilizadas individuales, por lo que, por ejemplo 'soy' y 'eres' cuentan como dos palabras utilizadas (aunque ambas palabras sean derivadas del verbo ser).</li>
-    <li>Para los sustantivos y adjetivos que admiten forma femenina se agregan las mismas, también se agregan las formas masculina y femenina en plural. Al igual que con los verbos regulares, la ocurrencia de cualquiera de éstas cuatro formas (masculina/femenina, plural/singular) de una de éstas palabras cuentan como una única palabra utilizada. Aclaración: los sustantivos y adjetivos que no admiten forma femenina no introducen su forma plural al diccionario.</li>
-  </ol>
-  Finalmente las palabras del texto analizado que no estaban presentes en el diccionario son devueltas en un archivo con el nombre ausentes_fecha_hora.txt, tambien se muestran en la salida tanto el porcentaje real, como el porcentaje extendido, el cual resulta de agregar las palabras ausentes al diccionario, y el mismo se calcula de la siguiente forma: PORCENTAJE_EXTENDIDO: = 100*(cantidad de palabras utilizadas + cantidad de palabras ausentes)/(cantidad de palabras existentes + cantidad de palabras ausentes).
-</p>
-</details>
-<details>
-  <summary>Casos de prueba porcentuador. (v2.0.0)</summary>
-    
-  |  Nombre obra | Porcentaje real | Porcentaje extendido |
-  | --- | --- | --- |
-  | 4 3 2 1 (Paul Auster) | 15.27% (13639/89308) | 23.27% (22951/98620) |
-  | La Santa Biblia (Digitalización por google) | 12.38% (11058/89308) | 42.83% (58635/136885) |
-  | Don Quijote de la Mancha (Miguel de Cervantes) | 11.90% (10631/89308) | 19.56% (19139/97816) |
-  | Cien años de soledad (Gabriel García Márquez) | 10.58% (9455/89308) | 14.76% (13832/93685) |
-  | Odisea (Homero) | 7.25% (6482/89308) | 13.40% (12818/95644) |
-  | Ilíada (Homero) | 6.96% (6217/89308) | 12.51% (11882/94973) |
+# Porcentuador
 
-</details>
-<b>Definiciones:</b>
-<details>
-  <summary>Permite obtener definiciones utilizando servicios web.</summary>
-  Aún no implementado.
-</details>
+## Objetivo
+
+El objetivo de la siguiente herramienta es ser capaz de clasificar textos en español por dificultad de lectura. También, dados dos textos, ser capaz de comparar la dificultad relativa entre ellos. Con éste objetivo se definen los conceptos teóricos de _"riqueza sintáctica"_ y _"riqueza semántica"_. Luego se implementa una métrica que es capaz de estimar la _"riqueza semántica"_ de un texto dado (la estimación está lejos de la métrica teórica ideal, pero aún así es suficiente para lograr una buena aproximación al objetivo de comparar la dificultad relativa entre dos textos y clasificarlos por dificultad).
+
+## Definiciones 
+
+Dado **S**, el conjunto de todas las palabras que la gramática del idioma español permite generar, y **T** un texto en español, se definen riqueza sintáctica y riqueza semántica de **T** como sigue:
+
+**riqueza_sintáctica(T)** = 100 * |**palabras_distintas(T)**| / |**S**|
+
+Notar que si a **T** le agregamos diferentes conjugaciones de un mismo verbo, la cantidad |**palabras_distintas(T)**| aumenta y en consecuencia **riqueza_sintáctica(T)** también. Un verbo regular en el idioma español tiene 52 conjugaciones distintas, por lo que, un texto que usa todas las conjugaciones de dos verbos distintos tendrá una riqueza sintáctica significativamente mayor que uno que usa sólo una conjugacion de 10 verbos diferentes. Lo mismo sucede agregando diferentes formas de un mismo sustantivo o adjetivo, por ejemplo "perro", "perros", "perra" y "perras", las cuatro son palabras distintas y por ende un texto que use las 4 tiene mayor riqueza sintáctica que uno que use solo una de ellas.
+
+Las observaciones anteriores dejan claro que dados dos textos **T1** y **T2**, tales que **riqueza_sintáctica(T1)** > **riqueza_sintáctica(T2)** no necesariamente significa que el texto **T1** sea más rico en vocabulario que **T2**. Menos aún sería posible afirmar algo sobre la _"riqueza semántica"_, intuitivamente definida como la cantidad de ideas y conceptos distintos referenciados por un texto.
+
+Antes de pasar a definir los conceptos utilizados para construir nuestra aproxiación de una métrica para la "riqueza semántica", vale la pena observar que, si existiera una métrica exacta para lo que pretendemos definir, llamémosla **R_SEM(T)**, la misma sería _"invariante por sinónimos"_ e _"invariante por definiciones"_.
+
+Más precisamente, sea **T2** un texto que resulta de concatenarle a **T1** sinónimos de alguna de las palabras ya existentes en **T1**, entonces **R_SEM(T2)** = **R_SEM(T1)** ya que ambos textos referencian las mismas ideas y conceptos (en **T2** sólo agregamos sinónimos de palabras existentes en **T1**). También dado **T3**, un texto que resulta de sustituir en **T1** una de sus palabras por su definición, se tiene **R_SEM(T3)** = **R_SEM(T1)**, ya que de nuevo, una palabra y su definición son una misma idea.
+
+De esas dos propiedades se pueden derivar otras como que concatenarle a un texto la definición de una de sus palabras no varía su riqueza semántica, lo cual se debe a que podemos primero concatenarle una palabra ya existente (es sinónima de si misma) y luego sustituirla por su definición, ambos pasos sin variar la riqueza semántica original del texto. La aproximación que construiremos no tendrá en cuenta estas dos propiedades y por lo tanto se parecerá más a una métrica de _"riqueza de vocabulario"_.
+
+Con el fin de definir una métrica que aproxime el concepto de riqueza semántica mejor que la ya definida _"riqueza sintáctica"_, utilizaremos la idea de _"palabra derivada"_.
+Ejemplos de palabras derivadas serían:
+- Todas las conjugaciones de un verbo en infinitivo, ej: amar -> amo, amaste, amamos, amabais.
+- Plurales masculinos y formas femeninas de sustantivos y adjetivos, ej: oso -> osos, osa, osas.
+- Adverbios derivados de adjetivos, los cuales a su vez se derivan de sustantivos, ej: velocidad -> veloz -> velozmente.
+- Diminutivos, ej: perro -> perrito.
+
+Una palabra **p** es derivada inmediata de otra **b** si existe en la gramática española una regla de construcción de palabras que permita construir **p** a partir de **b**.
+
+Denotamos **b**->**p** al hecho de que **p** es derivada inmediata de **b**.
+
+La lista de criterios de derivación dada anteriormente no es exhaustiva. En lo que sigue asumimos que se conocen todos los criterios de derivación y que para toda palabra **p** de **S**, existe a lo sumo una derivación inmediata que construye a **p** (puede no existir ninguna en cuyo caso decimos que **p** es una palabra primitiva).
+
+Una palabra **p** es derivada de **b**, si se cumple una de las siguientes dscondiciones: 
+1. **p** == **b**.
+2. Existe una secuencia finita y no vacía de derivaciones inmediatas tales que:
+	- La primera derivación tiene como palabra base a **b**.
+	- La ultima como palabra derivada a **p**.
+	- Y para toda derivación posterior a la primera, la palabra base es la palabra derivada en la derivación anterior.
+
+Denotamos **b**-->**p** el hecho de que exista una derivación de **p** a partir de **b**.
+
+Definimos largo de una derivacion como:
+- len(**p1**-->**p2**) = 0, si **p1** == **p2**.
+- len(**p1**-->**p2**) = cantidad de derivaciones inmediatas que forman la secuencia si **p1** != **p2**.
+
+Definimos la relación de equivalencia semántica **=SEM** entre dos palabras **p1** y **p2** de S como:
+
+**p1 =SEM p2** <=> (existe **p3**: **p3**-->**p1** y **p3**-->**p2**)
+
+**=SEM** es relación de equivalencia ya que: 
+
+1.	**p1 =SEM p1**: ya que **p1**-->**p1** por ser **p1** == **p1**.
+2.	Si **p1 =SEM p2**, existe **p3**: **p3**-->**p1** y **p3**-->**p2**, entonces, para el mismo **p3**: **p3**-->**p2** y **p3**-->**p1**, es decir **p2 =SEM p1**.
+3.	Si **p1 =SEM p2** y **p2 =SEM p3**, existen **p4** y **p5** tales que:
+	- **p4**-->**p1** y **p4**-->**p2**
+	- **p5**-->**p2** y **p5**-->**p3**
+	
+	Por inducción en los largos de **p4**-->**p2** y **p5**-->**p2** demostraremos que hay un ancestro común a **p3** y **p1**.
+	
+	- Largos 0 y 0: **p4** == **p2**, **p5** == **p2**, entonces **p5** == **p4**, entonces el ancestro común a **p3** y **p1** es **p4**.
+	- Largos 0 y n+1, asumiendo cierto 0 y n: **p4** == **p2**, entonces hay una derivación **p5**-->**p4**, concatenandole la derivación **p4**-->**p1** tenemos que **p5**-->**p1**, por lo tanto **p5** es un ancestro común a **p1** y **p3** (no  usamos la hipótesis inductiva).
+	- Largos n+1 y 0, asumiendo ciertto n y 0: **p5** == **p2**, entonces hay una derivación **p4**-->**p5**, concatenandole la derivacion **p5**-->**p3** tenemos que **p4**-->**p3**, por lo tanto **p4** es un ancestro común a **p1** y **p3** (no usamos la hipótesis inductiva).
+	- Largos m+1 y n asumiendo cierto m y n: len(**p4**-->**p2**) = m+1, len(**p5**-->**p2**) = n, separando en casos:
+	
+		1. m+1 == n: m+1 > 0, entonces tanto **p4**-->**p2** como **p5**-->**p2** son secuencias de al menos una derivación inmediata. Entonces la última derivación inmediata de ambas secuencias es la misma ya que existe una única tal que deriva **p2**. Llamémosla **p_x**->**p2**, entonces existen derivaciones **p4**-->**p_x** y **p5**-->**p_x** del mismo largo tales que su última derivación  inmediata es la misma, de nuevo debido a que existe una única tal que p_x es la palabra derivada, y por ende se puede asegurar la existencia de un par de derivaciones del mismo largo **p4**-->**p_y**, **p5**-->**p_y**, con largo menor a len(**p4**-->**p_x**), debido a que las derivaciones originales son de largo finito, el proceso se puede repetir hasta hayar que existen derivaciones de largo 1, es decir derivaciones inmediatas **p4**->**p_z**, **p5**->**p_z** para un **p_z** de S, lo cual implica que **p4** es igual a **p5**.Entonces **p4** == **p5**, es ancestro común a **p1** y **p3**.
+		2. m+1 > n: n > 0 (el caso n = 0 ya lo cubrimos en un paso inductivo anterior), entonces tanto **p4**-->**p2** como **p5**-->**p2** son secuencias de al menos una derivación inmediata. Entonces la última derivación inmediata de ambas secuencias es la misma ya que existe una única tal que deriva **p2**. Mediante el mismo proceso descrito en el caso anterior, que consiste en encontrar nuevos pares de derivaciones con uno menos de longitud en cada paso, y cuya palabra derivada coincide, se llega a que existen derivaciones **p4**-->**p_z** y **p5**-->**p_z**, tales que:
+			- len(**p4**-->**p_z**) > 1
+			- len(**p5**-->**p_z**) = 1, **p5**-->**p_z** es en realidad una derivacion inmediata **p5**->**p_z**, que coincide con la última derivación inmediata de **p4**-->**p_z**. 
+		
+			Luego, existe una derivación **p4**-->**p5** tal que:
+		
+			- len(**p4**-->**p5**) >= 1 y **p4**-->**p5** concatenado con **p5**->**p_z** es igual a la derivacion completa **p4**-->**p_z**.
+		
+			Dado que existe **p4**-->**p5**, concatenándole **p5**-->**p3**, se tiene que **p4**-->**p3**, por lo tanto **p4** es ancestro común de **p2** y **p3**.
+		3. n > m+1: m+1 > 0, este caso es simétrico al anterior y llegamos a que existe una derivacion **p5**-->**p4**, y por lo tanto concatenandole **p4**-->**p2** se tiene que **p5**-->**p2**, por lo tanto **p5** es ancestro común de **p2** y **p3**.
+			
+	En todos los casos existe un **p** tal que **p**-->**p2** y **p**-->**p3**, por lo tanto se concluye que **p2 =SEM p3**.
+	
+Ésto concluye que la relación **=SEM** es una relación de equivalencia. La idea intuitiva de ésta relacion es que todas las palabras que deriven una misma palabra primitiva pertenecerán a la misma clase de equivalencia. Entonces dados los conceptos de palabra primitiva y palabra derivada, otra propiedad que debería cumplir la métrica **R_SEM(T)** es que sea _"invariante por palabras equivalentes bajo **=SEM**"_. Ésta será la propiedad principal que tratará de cumplir nuestra estimación de **R_SEM**.
+
+Definimos entonces, dado un texto **T**, un conjunto de palabras **P**, y **eq(S)** el conjunto de clases de equivalencia de **=SEM**:
+
+**clases_semánticas(P)**: {**x** ∈ **eq(S)**: existe **p** ∈ **P** y **p** ∈ **x**}
+
+**clases_abarcadas(T)** = **clases_semanticas(palabras_distintas(T))**
+
+**riqueza_semántica(T)** = 100 * |**clases_abarcadas(T)**| / |**eq(S)**|
+
+WIP...
+
+## Implementación
+
+WIP...
+
+## Casos de prueba
+
+|  Nombre obra | Porcentaje real | Porcentaje extendido |
+| --- | --- | --- |
+| 4 3 2 1 (Paul Auster) | 15.27% (13639/89308) | 23.27% (22951/98620) |
+| La Santa Biblia (Digitalización por google) | 12.38% (11058/89308) | 42.83% (58635/136885) |
+| Don Quijote de la Mancha (Miguel de Cervantes) | 11.90% (10631/89308) | 19.56% (19139/97816) |
+| Cien años de soledad (Gabriel García Márquez) | 10.58% (9455/89308) | 14.76% (13832/93685) |
+| Odisea (Homero) | 7.25% (6482/89308) | 13.40% (12818/95644) |
+| Ilíada (Homero) | 6.96% (6217/89308) | 12.51% (11882/94973) |
