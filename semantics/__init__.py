@@ -1,17 +1,25 @@
 from . import DerivationRules 
 from . import Words
 import importlib.resources
-from importlib.resources import as_file
 
-__all__ = ['DerivationRules', 'Words']
+__all__ = [
+    'DerivationRules',
+    'Words',
+]
 
 # Paths definitions
 base_words = r'palabras.txt'
 sus_adj = r'sus_adj.txt'
+reg_verb = r'reg_verb.txt'
+irreg_verb_inf = r'irreg_verb_inf.txt'
+irreg_verb_conj = r'irreg_verb_conj.txt'
 
 resources = {
     base_words: None,
     sus_adj: None,
+    reg_verb: None,
+    irreg_verb_inf: None,
+    irreg_verb_conj: None,
 }
 
 pkgRoot = importlib.resources.files(anchor=__name__)
@@ -28,20 +36,18 @@ for text in txtTraversable.iterdir():
 # Define derivation rules used to instantiate
 rules = [
     DerivationRules.SingleFileExtensionRule(resources[sus_adj], 4),
+    DerivationRules.SingleFileExtensionRule(resources[reg_verb], 53),
+    DerivationRules.DoubleFileExtensionRule(resources[irreg_verb_inf], resources[irreg_verb_conj]),
 ]
 
-wordsList = [x.strip() for x in resources[base_words]]
-words = {x:Words.WordNode(x) for x in wordsList}
-wordsList.clear()
-
-print(len(words))
+words = {x: Words.WordNode(x) for x in [y.strip() for y in resources[base_words]]}
 
 for rule in rules:
     rule.derive(words)
 
-for r in resources:
-    resources[r].close()
+for resource in resources:
+    resources[resource].close()
 
 def test():
     print(len(words))
-    print(len([x for x in words.keys() if words[x].parentNode == None]))
+    print(len([1 for x, v in words.items() if v.parentNode == None]))
