@@ -34,7 +34,7 @@ def femeninizar(pre, suff):
             pre = pre[:len(pre)-2] + 'i' + y
         elif x == 'ó':
             pre = pre[:len(pre)-2] + 'o' + y
-        elif x == 'u':
+        elif x == 'ú':
             pre = pre[:len(pre)-2] + 'u' + y
     if pre.endswith('á'):
         pre = pre[:len(pre)-1] + 'a'
