@@ -30,9 +30,10 @@ class SingleFileExtensionRule(DerivationRule):
                 wordSet[wordText] = wordNode
             if counter == 0:
                 parentNode = wordNode
-            elif wordNode.parentNode == None: # This ensures that there is only one derivation for wordNode
+            else:
                 parentNode.addChild(wordNode)
-                wordNode.parentNode = parentNode
+                if wordNode.parentNode == None: # This ensures that there is only one derivation for wordNode
+                    wordNode.parentNode = parentNode
             counter = (counter + 1) % derivedByPrimitive
                         
 class DoubleFileExtensionRule(DerivationRule):
@@ -49,8 +50,8 @@ class DoubleFileExtensionRule(DerivationRule):
         assert primitiveFile != None
         assert derivedFile != None
         pfLen = len(list(primitiveFile))
-        dfLen = list(derivedFile).count('==\n')
-        assert pfLen == dfLen
+        dfLen = list(derivedFile).count('\n')
+        assert pfLen - 1 <= dfLen # Last primitive word doesn't need to separate its derived words with a blank line
         primitiveFile.seek(0)
         derivedFile.seek(0)
         for primitive in primitiveFile:
@@ -63,7 +64,7 @@ class DoubleFileExtensionRule(DerivationRule):
                 wordSet[primitiveText] = primitiveNode
             while True:
                 derivedText = derivedFile.readline().strip()
-                if derivedText[:2] == "==":
+                if derivedText == "":
                     break
                 derivedNode = None
                 if derivedText in wordSet:
@@ -71,9 +72,29 @@ class DoubleFileExtensionRule(DerivationRule):
                 else:
                     derivedNode = Words.WordNode(derivedText)
                     wordSet[derivedText] = derivedNode
+                primitiveNode.addChild(derivedNode)
                 if derivedNode.parentNode == None: # Ensure that it doesn't already exist a derivation for derivedText
-                    primitiveNode.addChild(derivedNode)
                     derivedNode.parentNode = primitiveNode
 
 class ComprehensionRule(DerivationRule):
-    pass
+    predicate = None
+    generator = None
+        
+    def __init__(self, predicate, generator):
+        self.predicate = predicate
+        self.generator = generator
+
+    def derive(self, wordSet:dict):
+        primitiveWords = {k: v for k, v in wordSet.items() if self.predicate(k)}
+        for pWord, pNode in primitiveWords.items():
+            derivedWords = self.generator(pWord)
+            for dWord in derivedWords:
+                dNode = None
+                if dWord in wordSet:
+                    dNode = wordSet[dWord]
+                else:
+                    dNode = Words.WordNode(dWord)
+                    wordSet[dWord] = dNode
+                pNode.addChild(dNode)
+                if dNode.parentNode == None: # Ensure that it doesn't already exist a derivation for derivedText
+                    dNode.parentNode = pNode

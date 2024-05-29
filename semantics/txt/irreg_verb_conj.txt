@@ -60,7 +60,7 @@ acertá
 acierte
 acertad
 acierten
-==
+
 actuado
 actuando
 actúo
@@ -123,7 +123,7 @@ actuá
 actúe
 actuad
 actúen
-==
+
 adeudado
 adeudando
 adeudo
@@ -186,7 +186,7 @@ adeudá
 adeude
 adeudad
 adeuden
-==
+
 adquirido
 adquiriendo
 adquiero
@@ -249,7 +249,7 @@ adquirí
 adquiera
 adquirid
 adquieran
-==
+
 agradecido
 agradeciendo
 agradezco
@@ -312,7 +312,7 @@ agradecé
 agradezca
 agradeced
 agradezcan
-==
+
 aislado
 aislando
 aíslo
@@ -375,7 +375,7 @@ aislá
 aísle
 aislad
 aíslen
-==
+
 andado
 andando
 ando
@@ -438,7 +438,7 @@ andá
 ande
 andad
 anden
-==
+
 anunciado
 anunciando
 anuncio
@@ -501,7 +501,7 @@ anunciá
 anuncie
 anunciad
 anuncien
-==
+
 aplaudido
 aplaudiendo
 aplaudo
@@ -564,7 +564,7 @@ aplaudí
 aplauda
 aplaudid
 aplaudan
-==
+
 asido
 asiendo
 asgo
@@ -627,7 +627,7 @@ así
 asga
 asid
 asgan
-==
+
 aunado
 aunando
 aúno
@@ -690,7 +690,7 @@ auná
 aúne
 aunad
 aúnen
-==
+
 averiguado
 averiguando
 averiguo
@@ -753,7 +753,7 @@ averiguá
 averigüe
 averiguad
 averigüen
-==
+
 bailado
 bailando
 bailo
@@ -816,7 +816,7 @@ bailá
 baile
 bailad
 bailen
-==
+
 bendecido
 bendiciendo
 bendigo
@@ -879,7 +879,7 @@ bendecí
 bendiga
 bendecid
 bendigan
-==
+
 cabido
 cabiendo
 quepo
@@ -942,7 +942,7 @@ cabé
 quepa
 cabed
 quepan
-==
+
 caído
 cayendo
 caigo
@@ -1005,7 +1005,7 @@ caé
 caiga
 caed
 caigan
-==
+
 causado
 causando
 causo
@@ -1068,7 +1068,7 @@ causá
 cause
 causad
 causen
-==
+
 ceñido
 ciñendo
 ciño
@@ -1131,7 +1131,7 @@ ceñí
 ciña
 ceñid
 ciñan
-==
+
 coitado
 coitando
 coito
@@ -1194,7 +1194,7 @@ coitá
 coite
 coitad
 coiten
-==
+
 conducido
 conduciendo
 conduzco
@@ -1257,7 +1257,7 @@ conducí
 conduzca
 conducid
 conduzcan
-==
+
 construido
 construyendo
 construyo
@@ -1320,7 +1320,7 @@ construí
 construya
 construid
 construyan
-==
+
 contado
 contando
 cuento
@@ -1383,7 +1383,7 @@ contá
 cuente
 contad
 cuenten
-==
+
 dado
 dando
 doy
@@ -1446,7 +1446,7 @@ da
 dé
 dad
 den
-==
+
 dicho
 diciendo
 digo
@@ -1509,7 +1509,7 @@ decí
 diga
 decid
 digan
-==
+
 descafeinado
 descafeinando
 descafeíno
@@ -1572,7 +1572,7 @@ descafeiná
 descafeíne
 descafeinad
 descafeínen
-==
+
 discernido
 discerniendo
 discierno
@@ -1635,7 +1635,7 @@ discerní
 discierna
 discernid
 disciernan
-==
+
 dormido
 durmiendo
 duermo
@@ -1698,7 +1698,7 @@ dormí
 duerma
 dormid
 duerman
-==
+
 entendido
 entendiendo
 entiendo
@@ -1761,7 +1761,7 @@ entendé
 entienda
 entended
 entiendan
-==
+
 enviado
 enviando
 envío
@@ -1824,7 +1824,7 @@ enviá
 envíe
 enviad
 envíen
-==
+
 erguido
 irguiendo
 yergo
@@ -1887,7 +1887,7 @@ erguí
 yerga
 erguid
 yergan
-==
+
 errado
 errando
 yerro
@@ -1950,7 +1950,7 @@ errá
 yerre
 errad
 yerren
-==
+
 estado
 estando
 estoy
@@ -2013,7 +2013,7 @@ está
 esté
 estad
 estén
-==
+
 habido
 habiendo
 he
@@ -2076,7 +2076,7 @@ habe
 haya
 habed
 hayan
-==
+
 hecho
 haciendo
 hago
@@ -2139,7 +2139,7 @@ hacé
 haga
 haced
 hagan
-==
+
 ido
 yendo
 voy
@@ -2202,7 +2202,7 @@ ve
 vaya
 id
 vayan
-==
+
 jugado
 jugando
 juego
@@ -2265,7 +2265,7 @@ jugá
 juegue
 jugad
 jueguen
-==
+
 leído
 leyendo
 leo
@@ -2328,7 +2328,7 @@ leé
 lea
 leed
 lean
-==
+
 lucido
 luciendo
 luzco
@@ -2391,7 +2391,7 @@ lucí
 luzca
 lucid
 luzcan
-==
+
 movido
 moviendo
 muevo
@@ -2454,7 +2454,7 @@ mové
 mueva
 moved
 muevan
-==
+
 mullido
 mullendo
 mullo
@@ -2517,7 +2517,7 @@ mullí
 mulla
 mullid
 mullan
-==
+
 oído
 oyendo
 oigo
@@ -2580,7 +2580,7 @@ oí
 oiga
 oíd
 oigan
-==
+
 olido
 oliendo
 huelo
@@ -2643,7 +2643,7 @@ olé
 huela
 oled
 huelan
-==
+
 pedido
 pidiendo
 pido
@@ -2706,7 +2706,7 @@ pedí
 pida
 pedid
 pidan
-==
+
 peinado
 peinando
 peino
@@ -2769,7 +2769,7 @@ peiná
 peine
 peinad
 peinen
-==
+
 placido
 placiendo
 plazco
@@ -2836,7 +2836,7 @@ placé
 plazca
 placed
 plazcan
-==
+
 podido
 pudiendo
 puedo
@@ -2899,7 +2899,7 @@ podé
 pueda
 poded
 puedan
-==
+
 puesto
 poniendo
 pongo
@@ -2962,7 +2962,7 @@ poné
 ponga
 poned
 pongan
-==
+
 predicho
 prediciendo
 predigo
@@ -3037,7 +3037,7 @@ predecí
 prediga
 predecid
 predigan
-==
+
 prohibido
 prohibiendo
 prohíbo
@@ -3100,7 +3100,7 @@ prohibí
 prohíba
 prohibid
 prohíban
-==
+
 raído
 rayendo
 raigo
@@ -3172,7 +3172,7 @@ raya
 raed
 raigan
 rayan
-==
+
 sentido
 sintiendo
 siento
@@ -3235,7 +3235,7 @@ sentí
 sienta
 sentid
 sientan
-==
+
 sido
 siendo
 soy
@@ -3297,7 +3297,7 @@ sé
 sea
 sed
 sean
-==
+
 sonreído
 sonriendo
 sonrío
@@ -3360,7 +3360,7 @@ sonreí
 sonría
 sonreíd
 sonrían
-==
+
 tañido
 tañendo
 taño
@@ -3423,7 +3423,7 @@ tañé
 taña
 tañed
 tañan
-==
+
 tenido
 teniendo
 tengo
@@ -3486,7 +3486,7 @@ tené
 tenga
 tened
 tengan
-==
+
 traído
 trayendo
 traigo
@@ -3549,7 +3549,7 @@ traé
 traiga
 traed
 traigan
-==
+
 valido
 valiendo
 valgo
@@ -3612,7 +3612,7 @@ valé
 valga
 valed
 valgan
-==
+
 venido
 viniendo
 vengo
@@ -3675,7 +3675,7 @@ vení
 venga
 venid
 vengan
-==
+
 visto
 viendo
 veo
@@ -3736,7 +3736,7 @@ ve
 vea
 ved
 vean
-==
+
 yacido
 yaciendo
 yazco
@@ -3818,4 +3818,3 @@ yaced
 yazcan
 yazgan
 yagan
-==
