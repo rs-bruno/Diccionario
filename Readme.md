@@ -1,4 +1,4 @@
-# Porcentuador
+# Clasificador
 
 ## Objetivo
 
@@ -33,7 +33,7 @@ Denotamos **b**->**p** al hecho de que **p** es derivada inmediata de **b**.
 
 La lista de criterios de derivación dada anteriormente no es exhaustiva. En lo que sigue asumimos que se conocen todos los criterios de derivación y que para toda palabra **p** de **S**, existe a lo sumo una derivación inmediata que construye a **p** (puede no existir ninguna en cuyo caso decimos que **p** es una palabra primitiva).
 
-Una palabra **p** es derivada de **b**, si se cumple una de las siguientes dscondiciones: 
+Una palabra **p** es derivada de **b**, si se cumple una de las siguientes condiciones: 
 1. **p** == **b**.
 2. Existe una secuencia finita y no vacía de derivaciones inmediatas tales que:
 	- La primera derivación tiene como palabra base a **b**.
@@ -46,11 +46,15 @@ Definimos largo de una derivacion como:
 - len(**p1**-->**p2**) = 0, si **p1** == **p2**.
 - len(**p1**-->**p2**) = cantidad de derivaciones inmediatas que forman la secuencia si **p1** != **p2**.
 
-Definimos la relación de equivalencia semántica **=SEM** entre dos palabras **p1** y **p2** de S como:
+Definimos la relación de "equivalencia semántica" **=SEM** entre dos palabras **p1** y **p2** de S como:
 
 **p1 =SEM p2** <=> (existe **p3**: **p3**-->**p1** y **p3**-->**p2**)
 
-**=SEM** es relación de equivalencia ya que: 
+La relación **=SEM**, así definida, es en efecto una relación de equivalencia. 
+
+<details>
+
+<summary> Ver demostración </summary>
 
 1.	**p1 =SEM p1**: ya que **p1**-->**p1** por ser **p1** == **p1**.
 2.	Si **p1 =SEM p2**, existe **p3**: **p3**-->**p1** y **p3**-->**p2**, entonces, para el mismo **p3**: **p3**-->**p2** y **p3**-->**p1**, es decir **p2 =SEM p1**.
@@ -78,8 +82,11 @@ Definimos la relación de equivalencia semántica **=SEM** entre dos palabras **
 		3. n > m+1: m+1 > 0, este caso es simétrico al anterior y llegamos a que existe una derivacion **p5**-->**p4**, y por lo tanto concatenandole **p4**-->**p2** se tiene que **p5**-->**p2**, por lo tanto **p5** es ancestro común de **p2** y **p3**.
 			
 	En todos los casos existe un **p** tal que **p**-->**p2** y **p**-->**p3**, por lo tanto se concluye que **p2 =SEM p3**.
-	
-Ésto concluye que la relación **=SEM** es una relación de equivalencia. La idea intuitiva de ésta relacion es que todas las palabras que deriven una misma palabra primitiva pertenecerán a la misma clase de equivalencia. Entonces dados los conceptos de palabra primitiva y palabra derivada, otra propiedad que debería cumplir la métrica **R_SEM(T)** es que sea _"invariante por palabras equivalentes bajo **=SEM**"_. Ésta será la propiedad principal que tratará de cumplir nuestra estimación de **R_SEM**.
+4.	Los tres puntos anteriores muestran que **=SEM** es una relación reflexiva, simétrica y transitiva, es decir, de equivalencia.
+
+</details>
+
+La idea intuitiva de ésta relacion es que todas las palabras que deriven una misma palabra primitiva pertenecerán a la misma clase de equivalencia. Entonces dados los conceptos de palabra primitiva y palabra derivada, otra propiedad que debería cumplir la métrica **R_SEM(T)** es que sea _"invariante por palabras equivalentes bajo **=SEM**"_. Ésta será la propiedad principal que tratará de cumplir nuestra estimación de **R_SEM**.
 
 Definimos entonces, dado un texto **T**, un conjunto de palabras **P**, y **eq(S)** el conjunto de clases de equivalencia de **=SEM**:
 
