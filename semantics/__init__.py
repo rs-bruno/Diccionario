@@ -61,15 +61,54 @@ for rule in rules:
 for path, resource in resources.items():
     resource.close()
 
+totalWordCount = len(words)
+primitiveWordCount = len([1 for x, v in words.items() if v.parentNode == None])
+
 def test():
-    print(len(words))
-    print(len([1 for x, v in words.items() if v.parentNode == None]))
+    print(totalWordCount)
+    print(primitiveWordCount)
 
 def primitive(word):
+    """ For a word, returns its primitive word. 
+    
+    Args:
+        word: Word of the dictionary.
+    
+    Returns:
+        The primitive word for the word arg, or None if the word arg insn't in the dictionary.
+    """
     if (word not in words):
         return None
     node = words[word]
     if (node.parentNode == None):
         return word
+    elif (node.parentNode.text == word):
+        return word
     else:
         return primitive(node.parentNode.text)
+
+def noAlphaToSpace(line):
+    buff = ''
+    for char in line:
+        if not char.isalpha():
+            buff = buff + ' '
+        else:
+            buff = buff + char
+    return buff
+
+def printDifficulty(textFile):
+    assert(not textFile.closed)
+    textFile.seek(0)
+    usedWords = set()
+    for line in textFile:
+        cleanLine = noAlphaToSpace(line)
+        usedWords.update([word.lower() for word in cleanLine.split()])
+    knownWords = {word for word in usedWords if word in words}
+    usedPrimitives = {primitive(word) for word in knownWords}
+    sintacticRichness = 100 * len(knownWords) / totalWordCount
+    semanticRichness = 100 * len(usedPrimitives) / primitiveWordCount
+    print(f"Sintactic richness: {sintacticRichness}")
+    print(f"Semantic richness: {semanticRichness}")
+
+
+
