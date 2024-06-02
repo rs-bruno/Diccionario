@@ -4,6 +4,21 @@
 
 El objetivo de la siguiente herramienta es ser capaz de clasificar textos en español por dificultad de lectura. También, dados dos textos, ser capaz de comparar la dificultad relativa entre ellos. Con éste objetivo se definen los conceptos teóricos de _"riqueza sintáctica"_ y _"riqueza semántica"_. Luego se implementa una métrica que es capaz de estimar la _"riqueza semántica"_ de un texto dado (la estimación está lejos de la métrica teórica ideal, pero aún así es suficiente para lograr una buena aproximación al objetivo de comparar la dificultad relativa entre dos textos y clasificarlos por dificultad).
 
+## Casos de prueba v3.0.0
+
+La siguiente es una tabla que muestra la evaluación de cada uno de los textos de prueba, la tabla está ordenada por riqueza semántica decreciente.
+
+|  Nombre obra | Autor | Riqueza sintáctica | Riqueza semántica |
+| --- | --- | --- | --- |
+| Diccionario de la lengua española (Edición del tricentenario) | Real Academia Española | 14.73% (108408 / 735532) | 99.39% (77521 / 77991) |
+| 4 3 2 1 | Paul Auster | 2.469% (18163 / 735532) | 11.93% (9309 / 77991) |
+| La Santa Biblia | Digitalización por Google | 2.331% (17146 / 735532) | 8.862% (6912 / 77991) |
+| Don Quijote de la Mancha | Miguel de Cervantes | 2.058% (15144 / 735532) | 8.561% (6677 / 77991) |
+| Cien años de soledad | Gabriel García Márquez | 1.611% (11852 / 735532) | 8.511% (6638 / 77991) |
+| Odisea | Homero | 2.058% (15144 / 735532) | 5.221% (4072 / 77991) |
+| Ilíada | Homero | 1.264% (9299 / 735532) | 5.014% (3911 / 77991) |
+| Las Mil y Una Noches | Anónimo | 0.892% (6568 / 735532) | 4.546% (3546 / 77991) |
+
 ## Definiciones 
 
 Dado **S**, el conjunto de todas las palabras que la gramática del idioma español permite generar, y **T** un texto en español, se definen riqueza sintáctica y riqueza semántica de **T** como sigue:
@@ -101,14 +116,3 @@ WIP...
 ## Implementación
 
 WIP...
-
-## Casos de prueba
-
-|  Nombre obra | Porcentaje real | Porcentaje extendido |
-| --- | --- | --- |
-| 4 3 2 1 (Paul Auster) | 15.27% (13639/89308) | 23.27% (22951/98620) |
-| La Santa Biblia (Digitalización por google) | 12.38% (11058/89308) | 42.83% (58635/136885) |
-| Don Quijote de la Mancha (Miguel de Cervantes) | 11.90% (10631/89308) | 19.56% (19139/97816) |
-| Cien años de soledad (Gabriel García Márquez) | 10.58% (9455/89308) | 14.76% (13832/93685) |
-| Odisea (Homero) | 7.25% (6482/89308) | 13.40% (12818/95644) |
-| Ilíada (Homero) | 6.96% (6217/89308) | 12.51% (11882/94973) |

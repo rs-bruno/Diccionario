@@ -5,6 +5,8 @@ import importlib.resources
 __all__ = [
     'DerivationRules',
     'Words',
+    'primitive',
+    'richness',
 ]
 
 # Paths definitions
@@ -96,7 +98,14 @@ def noAlphaToSpace(line):
             buff = buff + char
     return buff
 
-def printDifficulty(textFile):
+class Richness:
+    sintactic = (100, 1)
+    semantic = (100, 1)
+    def __init__(self, sintactic, semantic):
+        self.sintactic = sintactic
+        self.semantic = semantic
+
+def richness(textFile):
     assert(not textFile.closed)
     textFile.seek(0)
     usedWords = set()
@@ -105,10 +114,6 @@ def printDifficulty(textFile):
         usedWords.update([word.lower() for word in cleanLine.split()])
     knownWords = {word for word in usedWords if word in words}
     usedPrimitives = {primitive(word) for word in knownWords}
-    sintacticRichness = 100 * len(knownWords) / totalWordCount
-    semanticRichness = 100 * len(usedPrimitives) / primitiveWordCount
-    print(f"Sintactic richness: {sintacticRichness}")
-    print(f"Semantic richness: {semanticRichness}")
-
-
-
+    sintacticRichness = (len(knownWords), totalWordCount)
+    semanticRichness = (len(usedPrimitives), primitiveWordCount)
+    return Richness(sintacticRichness, semanticRichness)

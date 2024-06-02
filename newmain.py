@@ -1,21 +1,22 @@
 import os
-from semantics import test, primitive, printDifficulty
+from semantics import test, primitive, richness
 
-# For testing purposes
-# test()
-# print(primitive("faranduleado"))
-# print(primitive("maestras"))
-# print(primitive("lloré"))
-# print(primitive("paisaje"))
-# print(primitive("arabilidad"))
+test()
 
-# TODO: implement a simple cli for evaluating and comparing books
-pathBooks = os.curdir + os.sep + "books" + os.sep
-files = os.listdir(pathBooks)
-# print(files)
-for fileName in files:
-    path = pathBooks + fileName
-    file = open(path, "r", encoding="UTF-8")
-    print(fileName)
-    printDifficulty(file)
+def printBookRichness(bookName, bookPath):
+    bookFile = open(bookPath, "r", encoding="UTF-8")
+    r = richness(bookFile)
+    bookFile.close()
+    sinRichness = 100 * r.sintactic[0] / r.sintactic[1]
+    semRichness = 100 * r.semantic[0] / r.semantic[1]
+    print(bookName)
+    print(f"Sintactic richness: {str(sinRichness)[:5]}% ({r.sintactic[0]} / {r.sintactic[1]})")
+    print(f"Semantic richness: {str(semRichness)[:5]}% ({r.semantic[0]} / {r.semantic[1]})")
     print("")
+
+booksPath = os.sep.join([os.curdir, "books", ""])
+booksNames = os.listdir(booksPath)
+
+for bookName in booksNames:
+    bookPath = booksPath + bookName
+    printBookRichness(bookName, bookPath)
