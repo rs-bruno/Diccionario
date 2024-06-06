@@ -6,24 +6,41 @@ El objetivo de la siguiente herramienta es ser capaz de clasificar textos en esp
 
 ## Casos de prueba v3.0.0
 
-La siguiente es una tabla que muestra la evaluación de cada uno de los textos de prueba, la tabla está ordenada por riqueza semántica decreciente.
+La siguiente es una tabla que muestra la evaluación de las riquezas semántica y sintáctica de cada uno de los textos de prueba, como observación, la tabla se ordenó por riqueza semántica decreciente, pero resultó ser que la riqueza sintáctica también está ordenada de forma decreciente (con la excepción de la Ilíada y la Odisea en cuyo caso la riqueza sintáctica es casi igual), indicando una alta correlación entre riquezas sintáctica y semántica.
 
 |  Nombre obra | Autor | Riqueza sintáctica | Riqueza semántica |
 | --- | --- | --- | --- |
-| Diccionario de la lengua española (Edición del tricentenario) | Real Academia Española | 14.73% (108408 / 735532) | 99.39% (77521 / 77991) |
-| 4 3 2 1 | Paul Auster | 2.469% (18163 / 735532) | 11.93% (9309 / 77991) |
-| La Santa Biblia | Digitalización por Google | 2.331% (17146 / 735532) | 8.862% (6912 / 77991) |
-| Don Quijote de la Mancha | Miguel de Cervantes | 2.058% (15144 / 735532) | 8.561% (6677 / 77991) |
-| Cien años de soledad | Gabriel García Márquez | 1.611% (11852 / 735532) | 8.511% (6638 / 77991) |
-| Odisea | Homero | 2.058% (15144 / 735532) | 5.221% (4072 / 77991) |
-| Ilíada | Homero | 1.264% (9299 / 735532) | 5.014% (3911 / 77991) |
-| Las Mil y Una Noches | Anónimo | 0.892% (6568 / 735532) | 4.546% (3546 / 77991) |
+| Diccionario de la lengua española (edición del tricentenario) | Real Academia Española | 14.73% (108408 / 735532) | 99.39% (77521 / 77991) |
+| 4 3 2 1 | Paul Auster | 2.46% (18163 / 735532) | 11.93% (9309 / 77991) |
+| La santa biblia | Anónimo | 2.33% (17146 / 735532) | 8.86% (6912 / 77991) |
+| Don Quijote de la Mancha | Miguel de Cervantes | 2.05% (15144 / 735532) | 8.56% (6677 / 77991) |
+| Cien años de soledad | Gabriel García Márquez | 1.61% (11852 / 735532) | 8.51% (6638 / 77991) |
+| Odisea | Homero | 1.25% (9267 / 735532) | 5.22% (4072 / 77991) |
+| Ilíada | Homero | 1.26% (9299 / 735532) | 5.01% (3911 / 77991) |
+| Las mil y una Noches | Anónimo | 0.89% (6568 / 735532) | 4.54% (3546 / 77991) |
+| El alquimista | Paulo Coelho | 0.53% (3964 / 735532) | 2.67% (2089 / 77991) |
+| El principito | Saint-Exúpery | 0.31% (2294 / 735532) | 1.87% (1459 / 77991) |
+
+La siguiente tabla muestra las mismas obras ordenadas por dificultad.
+
+|  Nombre obra | Dificultad |
+| --- | --- |
+| Diccionario de la lengua española (edición del tricentenario) | 1199.13 |
+| La santa biblia | 353.20 |
+| 4 3 2 1 | 312.05 |
+| Don Quijote de la Mancha | 273.08 |
+| Cien años de soledad | 208.91 |
+| Ilíada | 162.91 |
+| Odisea | 153.89 |
+| Las mil y una Noches | 140.67 |
+| El alquimista | 103.08 |
+| El principito | 75.51 |
 
 ## Definiciones 
 
 Dado **S**, el conjunto de todas las palabras que la gramática del idioma español permite generar, y **T** un texto en español, se definen riqueza sintáctica y riqueza semántica de **T** como sigue:
 
-**riqueza_sintáctica(T)** = 100 * |**palabras_distintas(T)**| / |**S**|
+**riqueza_sintáctica(T)** = |**palabras_distintas(T)**| / |**S**|
 
 Notar que si a **T** le agregamos diferentes conjugaciones de un mismo verbo, la cantidad |**palabras_distintas(T)**| aumenta y en consecuencia **riqueza_sintáctica(T)** también. Un verbo regular en el idioma español tiene 52 conjugaciones distintas, por lo que, un texto que usa todas las conjugaciones de dos verbos distintos tendrá una riqueza sintáctica significativamente mayor que uno que usa sólo una conjugacion de 10 verbos diferentes. Lo mismo sucede agregando diferentes formas de un mismo sustantivo o adjetivo, por ejemplo "perro", "perros", "perra" y "perras", las cuatro son palabras distintas y por ende un texto que use las 4 tiene mayor riqueza sintáctica que uno que use solo una de ellas.
 
@@ -49,7 +66,9 @@ Denotamos **b**->**p** al hecho de que **p** es derivada inmediata de **b**.
 La lista de criterios de derivación dada anteriormente no es exhaustiva. En lo que sigue asumimos que se conocen todos los criterios de derivación y que para toda palabra **p** de **S**, existe a lo sumo una derivación inmediata que construye a **p** (puede no existir ninguna en cuyo caso decimos que **p** es una palabra primitiva).
 
 Una palabra **p** es derivada de **b**, si se cumple una de las siguientes condiciones: 
+
 1. **p** == **b**.
+
 2. Existe una secuencia finita y no vacía de derivaciones inmediatas tales que:
 	- La primera derivación tiene como palabra base a **b**.
 	- La ultima como palabra derivada a **p**.
@@ -103,13 +122,21 @@ La relación **=SEM**, así definida, es en efecto una relación de equivalencia
 
 La idea intuitiva de ésta relacion es que todas las palabras que deriven una misma palabra primitiva pertenecerán a la misma clase de equivalencia. Entonces dados los conceptos de palabra primitiva y palabra derivada, otra propiedad que debería cumplir la métrica **R_SEM(T)** es que sea _"invariante por palabras equivalentes bajo **=SEM**"_. Ésta será la propiedad principal que tratará de cumplir nuestra estimación de **R_SEM**.
 
-Definimos entonces, dado un texto **T**, un conjunto de palabras **P**, y **eq(S)** el conjunto de clases de equivalencia de **=SEM**:
+Definimos entonces, dado un texto **T**, un conjunto de palabras **P**, una palabra arbitraria **s** ∈ **S**  y **eq(S)** el conjunto de clases de equivalencia de **=SEM**:
 
-**clases_semánticas(P)**: {**x** ∈ **eq(S)**: existe **p** ∈ **P** y **p** ∈ **x**}
+**clase_semántica(s)** = **x** ∈ **eq(S)**: **s** ∈ **x** (**s** debe de pertenecer a uno y solo un **x** ya que **eq(S)** es una partición de **S**, lo que asegura que **clase_semántica(s)** sea una función bien definida sobre **S**)
+
+**clases_semánticas(P)**: {**clase_semántica(p)**: **p** ∈ **P**}
 
 **clases_abarcadas(T)** = **clases_semanticas(palabras_distintas(T))**
 
-**riqueza_semántica(T)** = 100 * |**clases_abarcadas(T)**| / |**eq(S)**|
+**riqueza_semántica(T)** = |**clases_abarcadas(T)**| / |**eq(S)**|
+
+Por último definimos dificultad de un texto como:
+
+**dificultad(T)** = (|**clases_abarcadas(T)**| / |**palabras_distintas(T)**|) * **sqrt(|palabras(T)|)**
+
+Como justificación intuitiva, pensamos en la dificultad de un texto como _"cantidad de ideas sobre cantidad de palabras que se usan para describirlas"_, dicho factor (le llamaremos **factor de dificultad**) multiplicado por el largo del texto (en realidad usamos la raiz para ponderar el largo del texto como un factor menos determinante). Cuanto más palabras usamos para expresar una idea mas fácil resulta su comprensión por lo tanto cuando el promedio de palabras por idea (|**palabras_distintas(T)**| / |**clases_abarcadas(T)**|) aumenta, la dificultad debe disminuir, lo que sugiere que el factor de dificultad sea inversamente proporcional al promedio de palabras por idea (|**palabras_distintas(T)**| / |**clases_abarcadas(T)**|)^(-1).
 
 WIP...
 

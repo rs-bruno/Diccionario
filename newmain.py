@@ -1,22 +1,36 @@
 import os
-from semantics import test, primitive, richness
+from semantics import evaluate
 
-test()
+def printTwoDecimals(floatingPoint):
+    return str(floatingPoint)[:str(floatingPoint).index('.') + 3]
 
-def printBookRichness(bookName, bookPath):
+def printBookEvaluations(bookName, bookPath):
     bookFile = open(bookPath, "r", encoding="UTF-8")
-    r = richness(bookFile)
+    details = evaluate(bookFile)
+    r = details.richness
     bookFile.close()
-    sinRichness = 100 * r.sintactic[0] / r.sintactic[1]
-    semRichness = 100 * r.semantic[0] / r.semantic[1]
     print(bookName)
-    print(f"Sintactic richness: {str(sinRichness)[:5]}% ({r.sintactic[0]} / {r.sintactic[1]})")
-    print(f"Semantic richness: {str(semRichness)[:5]}% ({r.semantic[0]} / {r.semantic[1]})")
+    print(f"Sintactic richness: {printTwoDecimals(r.getSintacticRichness())}% ({r.getUsedWords()} / {r.getTotalWords()})")
+    print(f"Semantic richness: {printTwoDecimals(r.getSemanticRichness())}% ({r.getUsedPrimitives()} / {r.getTotalPrimitives()})")
+    print(f"Difficulty: {printTwoDecimals(details.getDifficulty())}")
     print("")
 
 booksPath = os.sep.join([os.curdir, "books", ""])
 booksNames = os.listdir(booksPath)
 
-for bookName in booksNames:
-    bookPath = booksPath + bookName
-    printBookRichness(bookName, bookPath)
+if __name__ == "__main__":
+    userInput = None
+    while userInput != "q":
+        print("1) Evaluate sample books")
+        print("2) Evaluate book from file")
+        print("Q) Quit")
+        userInput = input().strip().lower()
+        if userInput == "1":
+            for bookName in booksNames:
+                bookPath = booksPath + bookName
+                printBookEvaluations(bookName, bookPath)
+        elif userInput == "2":
+            print("File path: ", end="")
+            bookPath = input()
+            printBookEvaluations("user book", bookPath)
+
