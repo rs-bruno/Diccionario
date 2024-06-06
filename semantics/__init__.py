@@ -1,6 +1,7 @@
 from . import DerivationRules 
 from . import Words
 import importlib.resources
+from math import sqrt
 
 __all__ = [
     'DerivationRules',
@@ -98,22 +99,49 @@ def noAlphaToSpace(line):
             buff = buff + char
     return buff
 
+
 class Richness:
     sintactic = (100, 1)
     semantic = (100, 1)
     def __init__(self, sintactic, semantic):
         self.sintactic = sintactic
         self.semantic = semantic
+    def getUsedWords(self):
+        return self.sintactic[0]
+    def getTotalWords(self):
+        return self.sintactic[1]
+    def getUsedPrimitives(self):
+        return self.semantic[0]
+    def getTotalPrimitives(self):
+        return self.semantic[1]
+    def getSintacticRichness(self):
+        return 100 * self.sintactic[0] / self.sintactic[1]
+    def getSemanticRichness(self):
+        return 100 *  self.semantic[0] / self.semantic[1]
 
-def richness(textFile):
+class BookDetails:
+    bookLength = 0
+    richness = None
+    def __init__(self, len, rich):
+        self.bookLength = len
+        self.richness = rich
+    def getDifficulty(self):
+        if self.bookLength <= 0:
+            return 0
+        return (self.richness.getUsedPrimitives() / self.richness.getUsedWords()) * sqrt(self.bookLength)
+
+def evaluate(textFile):
     assert(not textFile.closed)
     textFile.seek(0)
+    bookLength = 0
     usedWords = set()
     for line in textFile:
         cleanLine = noAlphaToSpace(line)
-        usedWords.update([word.lower() for word in cleanLine.split()])
+        lineWords = [word.lower() for word in cleanLine.split()]
+        bookLength += len(lineWords)
+        usedWords.update(lineWords)
     knownWords = {word for word in usedWords if word in words}
     usedPrimitives = {primitive(word) for word in knownWords}
     sintacticRichness = (len(knownWords), totalWordCount)
     semanticRichness = (len(usedPrimitives), primitiveWordCount)
-    return Richness(sintacticRichness, semanticRichness)
+    return BookDetails(bookLength, Richness(sintacticRichness, semanticRichness))
